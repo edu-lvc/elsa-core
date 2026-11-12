@@ -68,7 +68,7 @@ The validator parses `packages.yml` and fails in these cases:
 - `publish-consolidated-original-candidate.yml` does not run the same ID-set guard before its Feedz publish, or the guard step's `run:` is not exactly `set -euo pipefail`, stage, and the ID-set command on separate lines. A guard `shell:` or `defaults.run.shell` is rejected.
 - `Compile+Pack` still runs on a stable 3.10.x nuget.org dispatch or a `3.10.0` tag pack, or `packages.yml` packs `ConsolidatedReleaseCandidate` / builds Studio ClientLibs instead of calling `prepare_consolidated_release_candidate.py`.
 - `publish_npm` is missing, builds the pair itself, is not fail-closed on a stable 3.10.x tag, publishes to npmjs.com, or `validate_packages_id_set.txt` is not exactly 231 IDs.
-- `build_npm` is missing, does not pin `setup-dotnet` to `10.0.300` at the `studio-npm-pair.yml` SHA, or `publish_npm` Feedz publish has no dist-tag / already-published handling.
+- `build_npm` is missing, does not pin `setup-dotnet` to `10.0.300` at the `studio-npm-pair.yml` SHA, or `publish_npm` does not publish `@elsa-workflows/elsa-studio-wasm` before `@elsa-workflows/elsa-studio-wasm-react`, confirm WASM availability, or has no dist-tag / already-published handling.
 
 The tests mutate copies of the real workflow to confirm each of these cases is rejected. They also check every accepted and rejected dispatch selection.
 The nonpublishing `Validate package publication gates` workflow installs a hash-pinned PyYAML and runs the validator and tests on relevant PRs and main-branch changes.
